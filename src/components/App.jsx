@@ -7,7 +7,7 @@ const App = () => (
   <div className="row mt-5">
     <div className="col-md-4 offset-md-1">
       <Typography variant="h4">Todos</Typography>
-      <TodoList sam="sad" />
+      <TodoList />
     </div>
     <div className="col-md-4 offset-md-1">
       <Typography variant="h4">Add a todo</Typography>

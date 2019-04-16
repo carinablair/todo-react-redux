@@ -1,4 +1,9 @@
-import { ADD_TODO, TOGGLE_TODO } from "../constants/action-types";
+import {
+  ADD_TODO,
+  TOGGLE_TODO,
+  FILTER_TODO,
+  TODO_FILTERS
+} from "../constants/action-types";
 import { combineReducers } from "redux";
 
 function todos(state = [], action) {
@@ -14,7 +19,6 @@ function todos(state = [], action) {
       ];
     case TOGGLE_TODO:
       return state.map(todo => {
-        console.log(action);
         if (todo.id === action.id) {
           return Object.assign({}, todo, {
             completed: !todo.completed
@@ -27,8 +31,20 @@ function todos(state = [], action) {
   }
 }
 
+function todoFilters(state = { currentFilter: TODO_FILTERS.ALL }, action) {
+  switch (action.type) {
+    case FILTER_TODO: {
+      return Object.assign({}, state, { currentFilter: action.payload });
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
 const todoApp = combineReducers({
-  todos
+  todos,
+  todoFilters
 });
 
 export default todoApp;

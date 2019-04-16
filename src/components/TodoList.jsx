@@ -1,29 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
 import Todo from "./Todo";
-import { toggleTodo } from "../actions";
+import TodoFilters from "./TodoFilters";
+import { toggleTodo, filterTodo } from "../actions";
 import PropTypes from "prop-types";
+import { getFilteredTodos } from "../selectors/selectors";
 
 const mapStateToProps = state => {
-  return { todos: state.todos };
+  const currentFilter = state.todoFilters.currentFilter;
+  return {
+    todos: getFilteredTodos(state, currentFilter),
+    currentFilter: currentFilter
+  };
 };
 
 const mapDispatchToProps = {
-  toggleTodo: toggleTodo
+  toggleTodo: toggleTodo,
+  filterTodo: filterTodo
 };
 
 const ConnectedTodoList = props => (
-  <div className="list-group list-group-flush">
-    {props.todos.map((item, index) => (
-      <div className="list-group-item" key={index}>
-        <Todo
-          onTodoCheck={() => props.toggleTodo(item.id)}
-          completed={item.completed}
-          todoDescription={item.description}
-        />
-        {console.log(item)}
-      </div>
-    ))}
+  <div>
+    <div className="list-group list-group-flush">
+      {props.todos.map((item, index) => (
+        <div className="list-group-item" key={index}>
+          <Todo
+            onTodoCheck={() => props.toggleTodo(item.id)}
+            completed={item.completed}
+            todoDescription={item.description}
+          />
+        </div>
+      ))}
+    </div>
+    <TodoFilters
+      onFilterChange={filter => props.filterTodo(filter)}
+      currentFilter={props.currentFilter}
+    />
   </div>
 );
 

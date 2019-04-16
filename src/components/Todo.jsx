@@ -9,7 +9,7 @@ const Todo = ({ onTodoCheck, completed, todoDescription }) => (
       textDecoration: completed ? "line-through" : "none"
     }}
   >
-    <Checkbox checked={completed} /> {todoDescription}
+    <Checkbox checked={completed} color="primary" /> {todoDescription}
   </div>
 );
 
